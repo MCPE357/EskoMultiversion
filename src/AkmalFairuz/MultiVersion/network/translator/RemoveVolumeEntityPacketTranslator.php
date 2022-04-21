@@ -11,7 +11,7 @@ class RemoveVolumeEntityPacketTranslator{
 
 	public static function serialize(RemoveVolumeEntityPacket $packet, int $protocol){
 		$packet->putUnsignedVarInt($packet->getEntityNetId());
-		if($protocol >= ProtocolConstants::BEDROCK_1_18_10){
+		if($protocol > ProtocolConstants::BEDROCK_1_18_10){
 			$packet->putVarInt($packet->getDimension());
 		}
 	}
