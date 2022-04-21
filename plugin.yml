@@ -1,4 +1,4 @@
-name: MultiVersion
+name: MultiEsko
 api: 3.0.0
 main: AkmalFairuz\MultiVersion\Loader
 version: 1.0
