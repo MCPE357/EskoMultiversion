@@ -1,6 +1,6 @@
 name: MultiEsko
-api: 3.0.0
 main: AkmalFairuz\MultiVersion\Loader
 version: 1.0
-description: A plugin to allows older Minecraft client versions to connect to newer server versions.
+api: [3.0.0]
 authors: [AkmalFairuz, MCPE357, VaxPex]
+description: MultiProtocol for esko
