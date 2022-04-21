@@ -21,6 +21,7 @@ use AkmalFairuz\MultiVersion\network\translator\MobEquipmentPacketTranslator;
 use AkmalFairuz\MultiVersion\network\translator\NpcRequestPacketTranslator;
 use AkmalFairuz\MultiVersion\network\translator\PlayerListPacketTranslator;
 use AkmalFairuz\MultiVersion\network\translator\PlayerSkinPacketTranslator;
+use AkmalFairuz\MultiVersion\network\translator\RemoveVolumeEntityPacketTranslator;
 use AkmalFairuz\MultiVersion\network\translator\ResourcePacksInfoPacketTranslator;
 use AkmalFairuz\MultiVersion\network\translator\SetTitlePacketTranslator;
 use AkmalFairuz\MultiVersion\network\translator\StartGamePacketTranslator;
@@ -47,6 +48,7 @@ use pocketmine\network\mcpe\protocol\MobEquipmentPacket;
 use pocketmine\network\mcpe\protocol\NpcRequestPacket;
 use pocketmine\network\mcpe\protocol\PlayerListPacket;
 use pocketmine\network\mcpe\protocol\PlayerSkinPacket;
+use pocketmine\network\mcpe\protocol\RemoveVolumeEntityPacket;
 use pocketmine\network\mcpe\protocol\ResourcePacksInfoPacket;
 use pocketmine\network\mcpe\protocol\ResourcePackStackPacket;
 use pocketmine\network\mcpe\protocol\SetTitlePacket;
@@ -167,6 +169,11 @@ class Translator{
                     return null;
                 }
                 return $packet;
+	        case RemoveVolumeEntityPacket::NETWORK_ID:
+				/** @var RemoveVolumeEntityPacket $packet */
+				self::encodeHeader($packet);
+		        RemoveVolumeEntityPacketTranslator::serialize($packet, $protocol);
+		        break;
             case AnimateEntityPacket::NETWORK_ID:
                 /** @var AnimateEntityPacket $packet */
                 self::encodeHeader($packet);

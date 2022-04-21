@@ -48,6 +48,7 @@ class MultiVersionRuntimeBlockMapping{
 
     private static function setupLegacyMappings(int $protocol) : void{
         $legacyIdMap = json_decode(file_get_contents(Loader::$resourcesPath . "vanilla/block_id_map.json"), true);
+	    $metaMap = [];
 
         /** @var R12ToCurrentBlockMapEntry[] $legacyStateMap */
         $legacyStateMap = [];
@@ -56,6 +57,26 @@ class MultiVersionRuntimeBlockMapping{
 		    ProtocolConstants::BEDROCK_1_17_40, ProtocolConstants::BEDROCK_1_17_30 => ProtocolConstants::PROTOCOL[ProtocolConstants::BEDROCK_1_17_30],
 		    default => ProtocolConstants::PROTOCOL[$protocol]
 	    };
+	    foreach(MultiVersionRuntimeBlockMapping::$bedrockKnownStates[$protocol] as $runtimeId => $state){
+		    $name = $state->getString("name");
+		    if(!isset($legacyIdMap[$name])){
+			    continue;
+		    }
+
+		    $legacyId = $legacyIdMap[$name];
+		    if($legacyId <= 469){
+			    continue;
+		    }elseif(!isset($metaMap[$legacyId])){
+			    $metaMap[$legacyId] = 0;
+		    }
+
+		    $meta = $metaMap[$legacyId]++;
+		    if($meta > 15){
+			    continue;
+		    }
+
+		    self::registerMapping($runtimeId, $legacyId, $meta, $protocol);
+	    }
         $path = Loader::$resourcesPath . "vanilla/r12_to_current_block_map".$suffix.".bin";
         $legacyStateMapReader = new NetworkBinaryStream(file_get_contents($path));
         $nbtReader = new NetworkLittleEndianNBTStream();
