@@ -31,9 +31,6 @@ class MultiVersionCraftingManager extends CraftingManager{
         Timings::$craftingDataCacheRebuildTimer->startTiming();
         $c = Server::getInstance()->getCraftingManager();
         foreach(self::PROTOCOL as $protocol){
-            if(Loader::getInstance()->isProtocolDisabled($protocol)) {
-                continue;
-            }
             $pk = new CraftingDataPacket();
             $pk->cleanRecipes = true;
 

@@ -98,9 +98,6 @@ class MultiVersionItemTranslator{
      */
     public function __construct(MultiVersionItemTypeDictionary $dictionary, array $simpleMappings, array $complexMappings){
         foreach($dictionary->getAllEntries() as $protocol => $entries){
-            if(Loader::getInstance()->isProtocolDisabled($protocol)) {
-                continue;
-            }
             foreach($entries as $entry){
                 $stringId = $entry->getStringId();
                 $netId = $entry->getNumericId();

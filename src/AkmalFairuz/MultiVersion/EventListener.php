@@ -51,8 +51,12 @@ class EventListener implements Listener{
                 $event->setCancelled();
                 return;
             }
-            if(!in_array($packet->protocol, ProtocolConstants::SUPPORTED_PROTOCOLS, true) || Loader::getInstance()->isProtocolDisabled($packet->protocol)) {
-                $player->sendPlayStatus(PlayStatusPacket::LOGIN_FAILED_SERVER, true);
+            if(!in_array($packet->protocol, ProtocolConstants::SUPPORTED_PROTOCOLS, true)) {
+				if($packet->protocol < ProtocolInfo::CURRENT_PROTOCOL){
+					$player->sendPlayStatus(PlayStatusPacket::LOGIN_FAILED_CLIENT, true);
+				}else{
+					$player->sendPlayStatus(PlayStatusPacket::LOGIN_FAILED_SERVER, true);
+				}
                 $player->close("", $player->getServer()->getLanguage()->translateString("pocketmine.disconnect.incompatibleProtocol", [$packet->protocol]), false);
                 $event->setCancelled();
                 return;
@@ -100,7 +104,7 @@ class EventListener implements Listener{
         }
         if($packet instanceof BatchPacket) {
             if($packet->isEncoded){
-                if(Config::$ASYNC_BATCH_DECOMPRESSION && strlen($packet->buffer) >= Config::$ASYNC_BATCH_THRESHOLD) {
+                if(strlen($packet->buffer) >= 1024) {
                     try{
                         $task = new DecompressTask($packet, function(BatchPacket $packet) use ($player, $protocol){
                             $this->translateBatchPacketAndSend($packet, $player, $protocol);
@@ -157,7 +161,7 @@ class EventListener implements Listener{
                 $newPacket->addPacket($translated);
             }
         } catch(\UnexpectedValueException $e) {}
-        if(Config::$ASYNC_BATCH_COMPRESSION && strlen($newPacket->payload) >= Config::$ASYNC_BATCH_THRESHOLD){
+        if(strlen($newPacket->payload) >= 1024){
             $task = new CompressTask($newPacket, function(BatchPacket $packet) use ($player) {
                 $this->cancel_send = true;
                 $player->sendDataPacket($packet);
