@@ -4,7 +4,3 @@ main: AkmalFairuz\MultiVersion\Loader
 version: 1.0
 description: A plugin to allows older Minecraft client versions to connect to newer server versions.
 authors: [AkmalFairuz, MCPE357, VaxPex]
-
-permissions:
-  multiversion.command:
-    default: op
