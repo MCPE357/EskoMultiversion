@@ -25,20 +25,12 @@ class MultiVersionRuntimeBlockMapping{
     /** @var CompoundTag[][]|null */
     private static $bedrockKnownStates = [];
 
-    const PROTOCOL = [
-        ProtocolConstants::BEDROCK_1_16_220 => "_1_16_220",
-        ProtocolConstants::BEDROCK_1_17_0 => "_1_17_0",
-        ProtocolConstants::BEDROCK_1_17_10 => "_1_17_10",
-        ProtocolConstants::BEDROCK_1_17_30 => "_1_17_30",
-        ProtocolConstants::BEDROCK_1_17_40 => "_1_17_40"
-    ];
-
     private function __construct(){
         //NOOP
     }
 
     public static function init() : void{
-        foreach(self::PROTOCOL as $protocol => $fileName){
+        foreach(ProtocolConstants::PROTOCOL as $protocol => $fileName){
             $canonicalBlockStatesFile = file_get_contents(Loader::$resourcesPath . "vanilla/canonical_block_states".$fileName.".nbt");
             if($canonicalBlockStatesFile === false){
                 throw new AssumptionFailedError("Missing required resource file");
@@ -59,19 +51,11 @@ class MultiVersionRuntimeBlockMapping{
 
         /** @var R12ToCurrentBlockMapEntry[] $legacyStateMap */
         $legacyStateMap = [];
-        switch($protocol) {
-            case ProtocolConstants::BEDROCK_1_17_0:
-            case ProtocolConstants::BEDROCK_1_17_10:
-                $suffix = self::PROTOCOL[ProtocolConstants::BEDROCK_1_17_10];
-                break;
-            case ProtocolConstants::BEDROCK_1_17_40:
-            case ProtocolConstants::BEDROCK_1_17_30:
-                $suffix = self::PROTOCOL[ProtocolConstants::BEDROCK_1_17_30];
-                break;
-            default:
-                $suffix = self::PROTOCOL[$protocol];
-                break;
-        }
+	    $suffix = match ($protocol) {
+		    ProtocolConstants::BEDROCK_1_17_0, ProtocolConstants::BEDROCK_1_17_10 => ProtocolConstants::PROTOCOL[ProtocolConstants::BEDROCK_1_17_10],
+		    ProtocolConstants::BEDROCK_1_17_40, ProtocolConstants::BEDROCK_1_17_30 => ProtocolConstants::PROTOCOL[ProtocolConstants::BEDROCK_1_17_30],
+		    default => ProtocolConstants::PROTOCOL[$protocol]
+	    };
         $path = Loader::$resourcesPath . "vanilla/r12_to_current_block_map".$suffix.".bin";
         $legacyStateMapReader = new NetworkBinaryStream(file_get_contents($path));
         $nbtReader = new NetworkLittleEndianNBTStream();

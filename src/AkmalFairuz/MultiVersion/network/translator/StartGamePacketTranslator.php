@@ -23,7 +23,9 @@ class StartGamePacketTranslator {
         ($packet->buffer .= (\pack("g", $packet->yaw)));
 
         //Level settings
-        $packet->putVarInt($packet->seed);
+	    if($protocol <= ProtocolConstants::BEDROCK_1_18_10){
+		    $packet->putVarInt($packet->seed);
+	    }
         $packet->spawnSettings->write($packet);
         $packet->putVarInt($packet->generator);
         $packet->putVarInt($packet->worldGamemode);

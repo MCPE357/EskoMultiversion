@@ -361,7 +361,7 @@ class Serializer{
         foreach($rules as $name => $rule){
             $packet->putString($name);
             if($protocol >= ProtocolConstants::BEDROCK_1_17_0){
-                $packet->putBool($rule[2]);
+                $packet->putBool($rule[2] ?? false);
             }
             $packet->putUnsignedVarInt($rule[0]);
             switch($rule[0]){

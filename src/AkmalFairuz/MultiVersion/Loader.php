@@ -26,7 +26,7 @@ class Loader extends PluginBase{
 		self::setInstance($this);
 
         foreach($this->getResources() as $k => $v) {
-            $this->saveResource($k, $k !== "config.yml");
+            $this->saveResource($k, true);
         }
 
         self::$resourcesPath = $this->getDataFolder();
