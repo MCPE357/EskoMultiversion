@@ -1,6 +1,6 @@
 name: MultiEsko
-main: AkmalFairuz\MultiVersion\Loader
-version: 1.0
-api: [3.0.0]
-authors: [AkmalFairuz, MCPE357, VaxPex]
+main: EskoTeam\MultiEsko
+version: 1.1
+api: [ 3.0.0 ]
+authors: [ AkmalFairuz, MCPE357, VaxPex ]
 description: MultiProtocol for esko
