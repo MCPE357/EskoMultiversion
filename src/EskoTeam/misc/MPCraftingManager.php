@@ -16,6 +16,7 @@ class MPCraftingManager extends CraftingManager
 {
 
 	const PROTOCOL = [
+		ProtocolInfo::BEDROCK_1_18_30,
 		ProtocolInfo::BEDROCK_1_18_10,
 		ProtocolInfo::BEDROCK_1_18_0,
 		ProtocolInfo::BEDROCK_1_17_40,
