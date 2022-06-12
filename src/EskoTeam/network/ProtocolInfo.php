@@ -16,6 +16,7 @@ interface ProtocolInfo extends PMProtocolInfo
 	public const BEDROCK_1_17_40 = 471;
 	public const BEDROCK_1_18_0 = 475;
 	public const BEDROCK_1_18_10 = 486;
+	public const BEDROCK_1_18_30 = 503;
 
 	public const MINECRAFT_VERSIONS = [
 		self::BEDROCK_1_16_220 => "1.16.220",
@@ -25,6 +26,7 @@ interface ProtocolInfo extends PMProtocolInfo
 		self::BEDROCK_1_17_40 => "1.17.40",
 		self::BEDROCK_1_18_0 => "1.18.0",
 		self::BEDROCK_1_18_10 => "1.18.10",
+		self::BEDROCK_1_18_30 => "1.18.30",
 		self::CURRENT_PROTOCOL => self::MINECRAFT_VERSION_NETWORK
 	];
 
@@ -36,6 +38,7 @@ interface ProtocolInfo extends PMProtocolInfo
 		self::BEDROCK_1_17_40,
 		self::BEDROCK_1_18_0,
 		self::BEDROCK_1_18_10,
+		self::BEDROCK_1_18_30,
 		self::CURRENT_PROTOCOL
 	];
 
@@ -46,6 +49,7 @@ interface ProtocolInfo extends PMProtocolInfo
 		self::BEDROCK_1_17_30 => "_1_17_30",
 		self::BEDROCK_1_17_40 => "_1_17_40",
 		self::BEDROCK_1_18_0 => "_1_18_0",
-		self::BEDROCK_1_18_10 => "_1_18_10"
+		self::BEDROCK_1_18_10 => "_1_18_10",
+		self::BEDROCK_1_18_30 => "_1_18_30"
 	];
 }
