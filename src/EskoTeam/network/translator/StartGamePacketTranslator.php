@@ -28,6 +28,8 @@ class StartGamePacketTranslator
 		//Level settings
 		if ($protocol <= ProtocolInfo::BEDROCK_1_18_10) {
 			$packet->putVarInt($packet->seed);
+		} else if ($protocol >= ProtocolInfo::BEDROCK_1_18_30) {
+			$packet->putLLong($packet->seed);
 		}
 		$packet->spawnSettings->write($packet);
 		$packet->putVarInt($packet->generator);
