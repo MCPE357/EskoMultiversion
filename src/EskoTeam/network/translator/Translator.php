@@ -29,6 +29,7 @@ use pocketmine\network\mcpe\protocol\LoginPacket;
 use pocketmine\network\mcpe\protocol\MobArmorEquipmentPacket;
 use pocketmine\network\mcpe\protocol\MobEquipmentPacket;
 use pocketmine\network\mcpe\protocol\NpcRequestPacket;
+use pocketmine\network\mcpe\protocol\PlayerActionPacket;
 use pocketmine\network\mcpe\protocol\PlayerListPacket;
 use pocketmine\network\mcpe\protocol\PlayerSkinPacket;
 use pocketmine\network\mcpe\protocol\RemoveVolumeEntityPacket;
@@ -90,6 +91,13 @@ class Translator
 				self::decodeHeader($packet);
 				MobArmorEquipmentPacketTranslator::deserialize($packet, $protocol);
 				return $packet;
+			case PlayerActionPacket::NETWORK_ID:
+				/** @var PlayerActionPacket */
+				self::decodeHeader($packet);
+				PlayerActionPacketTranslator::deserialize($packet, $protocol);
+				self::encodeHeader($packet);
+				PlayerActionPacketTranslator::serialize($packet, $protocol);
+				break;
 		}
 		return $packet;
 	}
