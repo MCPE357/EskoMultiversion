@@ -1,4 +1,4 @@
-# MultiEsko
+# MultiEsko abondoned
 
 This is a continued version for the multiversion of AkmalFairuz
 
